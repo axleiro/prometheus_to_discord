@@ -5,78 +5,78 @@
         "Matrixs": [
    	   ["Memory:",
         {
-                "Name": "Avg Memory",
+                "Name": "Average Memory",
                 "Decimal" : 2,
                 "Expression" : "",
-                "Scale" : "MB",
+                "Scale" : "%",
                 "ValueToUse": "Avg",
-                "Query": "(avg_over_time(node_memory_MemTotal_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m]) - ((avg_over_time(node_memory_MemFree_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])) + sort_desc(avg_over_time(node_memory_Cached_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])) + sort_desc(avg_over_time(node_memory_Buffers_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])))) / 1024 / 1024"
+                "Query": "100 * (1 - (((avg_over_time(node_memory_MemFree_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])) + sort_desc(avg_over_time(node_memory_Cached_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])) + sort_desc(avg_over_time(node_memory_Buffers_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m]))) / avg_over_time(node_memory_MemTotal_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])))"
             },
    	   {
                 "Name": "Min Memory",
                 "Decimal" : 2,
                 "Expression" : "",
-                "Scale" : "MB",
+                "Scale" : "%",
                 "ValueToUse": "Min",
-                "Query": "(min_over_time(node_memory_MemTotal_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m]) - (min_over_time(node_memory_MemFree_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m]) + min_over_time(node_memory_Cached_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m]) + min_over_time(node_memory_Buffers_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m]))) / 1024 / 1024"
+                "Query": "100 * (1 - ((min_over_time(node_memory_MemFree_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m]) + min_over_time(node_memory_Cached_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m]) + min_over_time(node_memory_Buffers_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])) / min_over_time(node_memory_MemTotal_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])))"
             },
    	   {
                 "Name": "Max Memory",
                 "Decimal" : 2,
                 "Expression" : "",
-                "Scale" : "MB",
+                "Scale" : "%",
                 "ValueToUse": "Max",
-                "Query": "(max_over_time(node_memory_MemTotal_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m]) - (max_over_time(node_memory_MemFree_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m]) + max_over_time(node_memory_Cached_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m]) + max_over_time(node_memory_Buffers_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m]))) / 1024 / 1024"
+                "Query": "100 * (1 - ((max_over_time(node_memory_MemFree_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m]) + max_over_time(node_memory_Cached_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m]) + max_over_time(node_memory_Buffers_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])) / max_over_time(node_memory_MemTotal_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])))"
             },
    	   {
                 "Name": "95% Memory",
                 "Decimal" : 2,
                 "Expression" : "",
-                "Scale" : "MB",
+                "Scale" : "%",
                 "ValueToUse": "Max",
-                "Query": "(quantile_over_time(node_memory_MemTotal_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m]) - (quantile_over_time(0.95,node_memory_MemFree_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m]) + quantile_over_time(0.95,node_memory_Cached_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m]) + quantile_over_time(0.95,node_memory_Buffers_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m]))) / 1024 / 1024"
+                "Query": "100 * (1 -((quantile_over_time(0.95,node_memory_MemFree_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m]) + quantile_over_time(0.95,node_memory_Cached_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m]) + quantile_over_time(0.95,node_memory_Buffers_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])) / quantile_over_time(0.95,node_memory_MemTotal_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])))"
             },
    	   {
                 "Name": "99% Memory",
                 "Decimal" : 2,
                 "Expression" : "",
-                "Scale" : "MB",
+                "Scale" : "%",
                 "ValueToUse": "Max",
-                "Query": "(quantile_over_time(0.99,node_memory_MemTotal_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m]) - (quantile_over_time(0.99,node_memory_MemFree_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m]) + quantile_over_time(0.99,node_memory_Cached_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m]) + quantile_over_time(0.99,node_memory_Buffers_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m]))) / 1024 / 1024"
+                "Query": "100 * (1 -((quantile_over_time(0.99,node_memory_MemFree_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m]) + quantile_over_time(0.99,node_memory_Cached_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m]) + quantile_over_time(0.99,node_memory_Buffers_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])) / quantile_over_time(0.99,node_memory_MemTotal_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])))"
             }],
             ["CPU:",
-            {
-                "Name" : "Avg CPU Busy",
+                {
+                "Name" : "Max CPU Busy",
                 "Decimal" : 2,
                 "Expression" : "",
-                "Scale" : "",
-                "ValueToUse": "Avg",
-                "Query": "(count(count(node_cpu_seconds_total{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}) by (cpu))) - avg(sum by (mode)(irate(node_cpu_seconds_total{mode='idle',instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[5m])))"
+                "Scale" : "%",
+                "ValueToUse": "Max",
+                "Query": "(((count(count(node_cpu_seconds_total{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}) by (cpu))) - avg(sum by (mode)(irate(node_cpu_seconds_total{mode='idle',instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[5m])))) * 100) / count(count(node_cpu_seconds_total{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}) by (cpu))"
             },
             {
                 "Name" : "Min CPU Busy",
                 "Decimal" : 2,
                 "Expression" : "",
-                "Scale" : "",
+                "Scale" : "%",
                 "ValueToUse": "Min",
-                "Query": "(count(count(node_cpu_seconds_total{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}) by (cpu))) - avg(sum by (mode)(irate(node_cpu_seconds_total{mode='idle',instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[5m])))"
+                "Query": "(((count(count(node_cpu_seconds_total{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}) by (cpu))) - avg(sum by (mode)(irate(node_cpu_seconds_total{mode='idle',instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[5m])))) * 100) / count(count(node_cpu_seconds_total{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}) by (cpu))"
             },
             {
-                "Name" : "Max CPU Busy",
+                "Name" : "Avg CPU Busy",
                 "Decimal" : 2,
                 "Expression" : "",
-                "Scale" : "",
-                "ValueToUse": "Max",
-                "Query": "(count(count(node_cpu_seconds_total{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}) by (cpu))) - avg(sum by (mode)(irate(node_cpu_seconds_total{mode='idle',instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[5m])))"
+                "Scale" : "%",
+                "ValueToUse": "Avg",
+                "Query": "(((count(count(node_cpu_seconds_total{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}) by (cpu))) - avg(sum by (mode)(irate(node_cpu_seconds_total{mode='idle',instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[5m])))) * 100) / count(count(node_cpu_seconds_total{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}) by (cpu))"
             },
             {
                   "Name": "95% CPU Busy",
                   "Decimal" : 2,
                   "Expression" : "",
-                  "Scale" : "",
+                  "Scale" : "%",
                   "ValueToUse": "Max",
-                  "Query": "(count(count(node_cpu_seconds_total{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}) by (cpu))) - quantile_over_time(0.95,sum by (mode)(irate(node_cpu_seconds_total{mode='idle',instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[5m])))"
-            },
+                  "Query": "100 * (1 -((quantile_over_time(0.95,node_memory_MemFree_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m]) + quantile_over_time(0.95,node_memory_Cached_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m]) + quantile_over_time(0.95,node_memory_Buffers_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])) / quantile_over_time(0.95,node_memory_MemTotal_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])))"
+              },
             {
                   "Name": "99% CPU Busy",
                   "Decimal" : 2,
@@ -84,7 +84,7 @@
                   "Scale" : "%",
                   "ValueToUse": "Max",
                   "Query": "100 * (1 -((quantile_over_time(0.99,node_memory_MemFree_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m]) + quantile_over_time(0.99,node_memory_Cached_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m]) + quantile_over_time(0.99,node_memory_Buffers_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])) / quantile_over_time(0.99,node_memory_MemTotal_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])))"
-            }],
+              }],
             ["Disk:",
                 {
                 "Name" : "Max Disk read bytes",
@@ -290,3 +290,4 @@
         ]
     }
 ]
+
