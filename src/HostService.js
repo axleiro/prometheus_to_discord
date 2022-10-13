@@ -45,3 +45,7 @@ const GetHostWiseMatrix = async function (startDate, endDate, host, callback) {
 	// console.log( "returnValue is", returnValue );
     callback(returnValue);
 }
+
+module.exports = {
+    GetHostWiseMatrix: GetHostWiseMatrix
+}

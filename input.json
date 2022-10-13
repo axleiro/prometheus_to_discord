@@ -1,7 +1,7 @@
 [
     {
-        "Host": "validator-asia-sg1:9100",
-        "Job": "Mainnet-Beta",
+        "Host": "canary-am6-1:9100",
+        "Job": "Canaries",
         "Matrixs": [
    	   ["Memory:",
         {
