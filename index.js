@@ -46,35 +46,34 @@ const recursiveFunction = () => {
 
             finalResultToPush = finalResultToPush + "*Host - " + inputData[index].Host + "*\n";
             finalResultToPush = finalResultToPush + result;
-            console.log(finalResultToPush);
+            //  console.log("finalResultToPush is \n",finalResultToPush);
 
 	    // commenting code to stop posting to slack channel 
-        // SlackService.PostMessage(finalResultToPush).then(response => {
-		//     console.log(response)
-        //     }).catch(err => {
-		//     console.log(err)
-	    // });
+        SlackService.PostMessage(finalResultToPush).then(response => {
+		    console.log(response)
+            }).catch(err => {
+		    console.log(err)
+	    });
 
             index++;
             recursiveFunction();
         });
     } else {
-        console.log("End at " + (new Date()));
+        // console.log("End at " + (new Date()));
         const url = `https://discordapp.com/api/webhooks/1029687589910880256/haIhnWaFZxgfrDIcKyWGzgcxrSxxjTfHpBGMZfv9GJsCgVD-AXfkloGP-4z73w-p761f`;
-const fetch = require('node-fetch');
+        const fetch = require('node-fetch');
 
-function sendMessage(message) {
-   fetch(url, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({"username": "singhritesh750", "content": `New blog post 👉  ${message.title}`})
-    });
-}
-sendMessage({title: finalResultToPush})
+        function sendMessage(message) {
+        fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({"username": "singhritesh750", "content": `New blog post 👉  ${message.title}`})
+            });
+        }
+        sendMessage({title: finalResultToPush})
     }
 }
-
 
 recursiveFunction();
