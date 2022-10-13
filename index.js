@@ -12,48 +12,69 @@ const optionDefinitions = [
 
 const options = commandLineArgs(optionDefinitions);
 
-console.log("Start at " + (new Date()));
+// console.log("Start at " + (new Date()));
 
 let rawData = fs.readFileSync(options.input);
 let inputData = JSON.parse(rawData);
 
 inputData.forEach(e => {
-//     	e.Matrixs.forEach(d => {
-// 		d.forEach(m => {
-//         		m.Query = m.Query.replace(new RegExp("HOSTTOKEN", 'g'), e.Host).replace(new RegExp("JOBTOKEN", 'g'), e.Job);
-//     	});
-//     });
-// });
-e.Matrixs.forEach(m => {
-    m.Query = m.Query.replace(new RegExp("HOSTTOKEN", 'g'), e.Host).replace(new RegExp("JOBTOKEN", 'g'), e.Job);
+    //console.log("e is ",e)
+    e.Matrixs.forEach(g => {
+        //console.log("g is ",g)
+        g.forEach(m => {
+            //console.log("m is ",m)
+            if(typeof(m) === 'string') return
+            m.Query = m.Query.replace(new RegExp("HOSTTOKEN", 'g'), e.Host).replace(new RegExp("JOBTOKEN", 'g'), e.Job);
+        });
+    });
 });
-});
+// console.log(inputData)
 
-console.log("Data fetched ....");
-console.log("Input data is", inputData)
 const endDate = new Date();
 const startDate = date.addDays(endDate, (-1 * options.days));
 
 let index = 0;
+let finalResultToPush = "";
 
 
 const recursiveFunction = () => {
     if (index < inputData.length) {
-	console.log("Index is",index);
         HostService.GetHostWiseMatrix(startDate, endDate, inputData[index], (result) => {
-	    console.log("Result is", result);
-            let finalResultToPush = "";
+	    //console.log("result is ",result)
 
-            finalResultToPush = finalResultToPush + "*Host - " + inputData[index].Host + "*\n\n";
+            // let finalResultToPush = "";
+
+            finalResultToPush = finalResultToPush + "*Host - " + inputData[index].Host + "*\n";
             finalResultToPush = finalResultToPush + result;
-            finalResultToPush = finalResultToPush + "\n";
             console.log(finalResultToPush);
-            SlackService.PostMessage(finalResultToPush);
+
+	    // commenting code to stop posting to slack channel 
+        // SlackService.PostMessage(finalResultToPush).then(response => {
+		//     console.log(response)
+        //     }).catch(err => {
+		//     console.log(err)
+	    // });
+
             index++;
             recursiveFunction();
         });
     } else {
         console.log("End at " + (new Date()));
+        const url = `https://discordapp.com/api/webhooks/1029687589910880256/haIhnWaFZxgfrDIcKyWGzgcxrSxxjTfHpBGMZfv9GJsCgVD-AXfkloGP-4z73w-p761f`;
+const fetch = require('node-fetch');
+
+function sendMessage(message) {
+   fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({"username": "singhritesh750", "content": `New blog post 👉  ${message.title}`})
+    });
+}
+sendMessage({title: finalResultToPush})
     }
 }
+
+
 recursiveFunction();
