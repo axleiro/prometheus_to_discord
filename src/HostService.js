@@ -46,6 +46,37 @@ const GetHostWiseMatrix = async function (startDate, endDate, host, callback) {
     callback(returnValue);
 }
 
+// const GetHostWiseMatrix = function( startDate, endDate, host, callback ) {
+//     console.log( "Host is", host )
+//     let returnValue = "\n";
+//     // console.log( "returnValue is", returnValue );
+//     host.Matrixs.forEach( function(element) {
+//         // console.log( "returnValue is", returnValue );
+//         element.forEach( function(matrixObject) {
+//             if( typeof(matrixObject !== String) ){
+//                 PromothiusClient.GetMatrixFromPromothius( startDate, endDate, matrixObject.Query, matrixObject.ValueToUse, (result) => {
+//                     let finalValue = result.value;
+//                     if( matrixObject.Expression != undefined &&  matrixObject.Expression != "" ) {
+//                         finalValue = mexp.eval( matrixObject.Expression.replace("X" , finalValue) );
+//                     }
+
+//                     if( matrixObject.Decimal != 0 ) {
+//                         finalValue = finalValue.toFixed( matrixObject.Decimal );
+//                         // console.log( "finalValue is", finalValue );
+//                     }
+
+//                     returnValue += "\n" + matrixObject.Name + " - " + finalValue + " " + matrixObject.Scale + "\n";
+//                     // console.log( "returnValue is", returnValue );
+//                 });
+//             } else {
+//                 returnValue += matrixObject;
+//             }
+//         });
+//     });
+//     // console.log( "returnValue is", returnValue );
+//     callback( returnValue );
+// }
+
 module.exports = {
     GetHostWiseMatrix: GetHostWiseMatrix
 }

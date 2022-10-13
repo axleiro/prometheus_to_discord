@@ -44,7 +44,7 @@ const GetFinalValue = function (values, valueToUse) {
 async function GetMatrixFromPromothius(startDate, endDate, query, valueToUse) {
     // console.log("Inside GetMatrixFromPromothius", valueToUse)
     let uriToCall = GetURIToCall(startDate, endDate, query);
-    console.log("uriToCall is",uriToCall)
+    // console.log("uriToCall is",uriToCall)
     const response = await fetch(uriToCall, {
         method: 'GET',
         headers: {
@@ -54,9 +54,9 @@ async function GetMatrixFromPromothius(startDate, endDate, query, valueToUse) {
         body: null
 	})
 	const responsedata = await response.json()
-	console.log("query", query)
-	console.log("json", responsedata)
-	console.log("valueToUse", valueToUse)
+	// console.log("query", query)
+	// console.log("json", responsedata)
+	// console.log("valueToUse", valueToUse)
 
 
 	// 	.then(function (response) {
