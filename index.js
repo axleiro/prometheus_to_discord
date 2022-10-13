@@ -46,14 +46,14 @@ const recursiveFunction = () => {
 
             finalResultToPush = finalResultToPush + "*Host - " + inputData[index].Host + "*\n";
             finalResultToPush = finalResultToPush + result;
-            //  console.log("finalResultToPush is \n",finalResultToPush);
+            console.log("finalResultToPush is \n",finalResultToPush);
 
-	    // commenting code to stop posting to slack channel 
-        SlackService.PostMessage(finalResultToPush).then(response => {
-		    console.log(response)
-            }).catch(err => {
-		    console.log(err)
-	    });
+	        // commenting code to stop posting to slack channel 
+            SlackService.PostMessage(finalResultToPush).then(response => {
+                console.log(response)
+                }).catch(err => {
+                console.log(err)
+            });
 
             index++;
             recursiveFunction();

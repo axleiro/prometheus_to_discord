@@ -1,40 +1,47 @@
-
 const PromothiusClient = require('./PromothiusClient');
 const mexp = require('math-expression-evaluator');
+let returnValue = "";
 
-const GetHostWiseMatrix = function (startDate, endDate, host, callback) {
-    
-	let index = 0;
-    let returnValue =  "";
+const processObject = async function (startDate, endDate, matrixObject, callback) {
+	// console.log("returnValue", returnValue)
+	if (typeof (matrixObject) != 'string') {
+		// console.log("Matrix object is", matrixObject)
+		const result = await PromothiusClient.GetMatrixFromPromothius( startDate, endDate, matrixObject.Query, matrixObject.ValueToUse)
+			let finalValue = result.value;
+			if( matrixObject.Expression != undefined &&  matrixObject.Expression != "" ) {
+				finalValue = mexp.eval( matrixObject.Expression.replace("X" , finalValue) );
+			}
 
-    const recursiveFunction = () => {
-        if (index < host.Matrixs.length) {
-            // for(let i=0; i<host.Matrixs[index].length; i++){
-            //       let metrics = host.Matrixs[index][i]
-    	    //host.Matrixs[index].forEach(async function(metrics,i) {
-		// console.log(metrics)
-            PromothiusClient.GetMatrixFromPromothius(startDate, endDate, host.Matrixs[index].Query, host.Matrixs[index].ValueToUse, (result) => {
+			if( matrixObject.Decimal != 0 ) {
+				finalValue = finalValue.toFixed( matrixObject.Decimal );
+				// console.log( "finalValue is \n", finalValue );
+			}
 
-                let finalValue = result.value;
-                if(host.Matrixs[index].Expression != undefined &&  host.Matrixs[index].Expression != "" ){
-                    finalValue = mexp.eval(host.Matrixs[index].Expression.replace("X" , finalValue));
-                }
-
-                if(host.Matrixs[index].Decimal != 0){
-                    finalValue = finalValue.toFixed(host.Matrixs[index].Decimal);
-                }
-
-                returnValue = returnValue +  host.Matrixs[index].Name + " - " + finalValue + " " + host.Matrixs[index].Scale + "\n";
-                index++;
-                recursiveFunction();
-            });
-        } else {
-			callback(returnValue);
-    	}
-    }
-    recursiveFunction();
+			returnValue += "\n" + matrixObject.Name + " - " + finalValue + " " + matrixObject.Scale;
+			// console.log( "returnValue is \n", returnValue );
+	} else {
+		returnValue = returnValue + "\n```\n" + matrixObject;
+	}
 }
 
-module.exports = {
-    GetHostWiseMatrix: GetHostWiseMatrix
+const processItem = async function( startDate, endDate, item, callback ) {
+	await (async function processMatrix() {
+		for ( const object of item ) {
+			await processObject( startDate, endDate, object, callback );
+		}
+		// console.log("process Item Done!");
+		returnValue = returnValue + "\n```";
+	})();
+}
+
+const GetHostWiseMatrix = async function (startDate, endDate, host, callback) {
+	console.log("Host is", host);
+	await (async function processArray( matrixsArray ) {
+		for ( const item of matrixsArray ) {
+		  await processItem( startDate, endDate, item, callback, returnValue );
+		}
+		// console.log('process Array Done!');
+	})(host.Matrixs);
+	// console.log( "returnValue is", returnValue );
+    callback(returnValue);
 }
