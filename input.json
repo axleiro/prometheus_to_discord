@@ -1,48 +1,24 @@
 [
     {
-        "Host": "canary-am6-1:9100",
+        "Host": "edge-validator-us-sv15:9100",
         "Job": "Canaries",
         "Matrixs": [
-   	   ["Memory:",
-        {
-                "Name": "Average Memory",
-                "Decimal" : 2,
-                "Expression" : "",
-                "Scale" : "%",
-                "ValueToUse": "Avg",
-                "Query": "100 * (1 - (((avg_over_time(node_memory_MemFree_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])) + sort_desc(avg_over_time(node_memory_Cached_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])) + sort_desc(avg_over_time(node_memory_Buffers_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m]))) / avg_over_time(node_memory_MemTotal_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])))"
-            },
-   	   {
-                "Name": "Min Memory",
-                "Decimal" : 2,
-                "Expression" : "",
-                "Scale" : "%",
-                "ValueToUse": "Min",
-                "Query": "100 * (1 - ((min_over_time(node_memory_MemFree_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m]) + min_over_time(node_memory_Cached_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m]) + min_over_time(node_memory_Buffers_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])) / min_over_time(node_memory_MemTotal_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])))"
-            },
-   	   {
+           ["Memory:",
+        {   
                 "Name": "Max Memory",
                 "Decimal" : 2,
-                "Expression" : "",
+                "Expression" : "", 
                 "Scale" : "%",
                 "ValueToUse": "Max",
                 "Query": "100 * (1 - ((max_over_time(node_memory_MemFree_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m]) + max_over_time(node_memory_Cached_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m]) + max_over_time(node_memory_Buffers_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])) / max_over_time(node_memory_MemTotal_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])))"
-            },
-   	   {
-                "Name": "95% Memory",
+            },  
+           {   
+                "Name": "Average Memory",
                 "Decimal" : 2,
-                "Expression" : "",
+                "Expression" : "", 
                 "Scale" : "%",
-                "ValueToUse": "Max",
-                "Query": "100 * (1 -((quantile_over_time(0.95,node_memory_MemFree_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m]) + quantile_over_time(0.95,node_memory_Cached_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m]) + quantile_over_time(0.95,node_memory_Buffers_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])) / quantile_over_time(0.95,node_memory_MemTotal_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])))"
-            },
-   	   {
-                "Name": "99% Memory",
-                "Decimal" : 2,
-                "Expression" : "",
-                "Scale" : "%",
-                "ValueToUse": "Max",
-                "Query": "100 * (1 -((quantile_over_time(0.99,node_memory_MemFree_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m]) + quantile_over_time(0.99,node_memory_Cached_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m]) + quantile_over_time(0.99,node_memory_Buffers_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])) / quantile_over_time(0.99,node_memory_MemTotal_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])))"
+                "ValueToUse": "Avg",
+                "Query": "100 * (1 - (((avg_over_time(node_memory_MemFree_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])) + sort_desc(avg_over_time(node_memory_Cached_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])) + sort_desc(avg_over_time(node_memory_Buffers_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m]))) / avg_over_time(node_memory_MemTotal_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])))"
             }],
             ["CPU:",
                 {
@@ -54,36 +30,12 @@
                 "Query": "(((count(count(node_cpu_seconds_total{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}) by (cpu))) - avg(sum by (mode)(irate(node_cpu_seconds_total{mode='idle',instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[5m])))) * 100) / count(count(node_cpu_seconds_total{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}) by (cpu))"
             },
             {
-                "Name" : "Min CPU Busy",
-                "Decimal" : 2,
-                "Expression" : "",
-                "Scale" : "%",
-                "ValueToUse": "Min",
-                "Query": "(((count(count(node_cpu_seconds_total{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}) by (cpu))) - avg(sum by (mode)(irate(node_cpu_seconds_total{mode='idle',instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[5m])))) * 100) / count(count(node_cpu_seconds_total{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}) by (cpu))"
-            },
-            {
                 "Name" : "Avg CPU Busy",
                 "Decimal" : 2,
                 "Expression" : "",
                 "Scale" : "%",
                 "ValueToUse": "Avg",
                 "Query": "(((count(count(node_cpu_seconds_total{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}) by (cpu))) - avg(sum by (mode)(irate(node_cpu_seconds_total{mode='idle',instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[5m])))) * 100) / count(count(node_cpu_seconds_total{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}) by (cpu))"
-            },
-            {
-                  "Name": "95% CPU Busy",
-                  "Decimal" : 2,
-                  "Expression" : "",
-                  "Scale" : "%",
-                  "ValueToUse": "Max",
-                  "Query": "100 * (1 -((quantile_over_time(0.95,node_memory_MemFree_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m]) + quantile_over_time(0.95,node_memory_Cached_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m]) + quantile_over_time(0.95,node_memory_Buffers_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])) / quantile_over_time(0.95,node_memory_MemTotal_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])))"
-              },
-            {
-                  "Name": "99% CPU Busy",
-                  "Decimal" : 2,
-                  "Expression" : "",
-                  "Scale" : "%",
-                  "ValueToUse": "Max",
-                  "Query": "100 * (1 -((quantile_over_time(0.99,node_memory_MemFree_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m]) + quantile_over_time(0.99,node_memory_Cached_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m]) + quantile_over_time(0.99,node_memory_Buffers_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])) / quantile_over_time(0.99,node_memory_MemTotal_bytes{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])))"
               }],
             ["Disk:",
                 {
@@ -95,36 +47,12 @@
                 "Query": "sum(max_over_time(irate(node_disk_read_bytes_total{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])[5m:]))/1024/1024"
             },
             {
-                "Name" : "Min Disk read bytes",
-                "Decimal" : 2,
-                "Expression" : "",
-                "Scale" : "MB",
-                "ValueToUse": "Last",
-                "Query": "sum(min_over_time(irate(node_disk_read_bytes_total{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])[5m:]))/1024/1024"
-            },
-            {
                 "Name" : "Avg Disk read bytes",
                 "Decimal" : 2,
                 "Expression" : "",
                 "Scale" : "MB",
                 "ValueToUse": "Last",
                 "Query": "sum(avg_over_time(irate(node_disk_read_bytes_total{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])[5m:]))/1024/1024"
-            },
-            {
-                "Name" : "95% Disk read bytes",
-                "Decimal" : 2,
-                "Expression" : "",
-                "Scale" : "MB",
-                "ValueToUse": "Last",
-                "Query": "sum(quantile_over_time(0.95,irate(node_disk_read_bytes_total{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])[5m:]))/1024/1024"
-            },
-            {
-                "Name" : "99% Disk read bytes",
-                "Decimal" : 2,
-                "Expression" : "",
-                "Scale" : "MB",
-                "ValueToUse": "Last",
-                "Query": "sum(quantile_over_time(0.99,irate(node_disk_read_bytes_total{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])[5m:]))/1024/1024"
             },
             {
                 "Name" : "Max Disk writeen bytes",
@@ -135,76 +63,12 @@
                 "Query": "sum(max_over_time(irate(node_disk_written_bytes_total{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])[5m:]))/1024/1024"
             },
             {
-                "Name" : "Min Disk written bytes",
-                "Decimal" : 2,
-                "Expression" : "",
-                "Scale" : "MB",
-                "ValueToUse": "Min",
-                "Query": "sum(min_over_time(irate(node_disk_written_bytes_total{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])[5m:]))/1024/1024"
-            },
-            {
                 "Name" : "Avg Disk written bytes",
                 "Decimal" : 2,
                 "Expression" : "",
                 "Scale" : "MB",
                 "ValueToUse": "Last",
                 "Query": "sum(avg_over_time(irate(node_disk_written_bytes_total{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])[5m:]))/1024/1024"
-            },
-            {
-                "Name" : "95% Disk written bytes",
-                "Decimal" : 2,
-                "Expression" : "",
-                "Scale" : "MB",
-                "ValueToUse": "Max",
-                "Query": "sum(quantile_over_time(0.95,irate(node_disk_written_bytes_total{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])[5m:]))/1024/1024"
-            },
-            {
-                "Name" : "99% Disk written bytes",
-                "Decimal" : 2,
-                "Expression" : "",
-                "Scale" : "MB",
-                "ValueToUse": "Max",
-                "Query": "sum(quantile_over_time(0.99,irate(node_disk_written_bytes_total{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])[5m:]))/1024/1024"
-            },
-            {
-                "Name" : "Max IOPS",
-                "Decimal" : 2,
-                "Expression" : "",
-                "Scale" : "",
-                "ValueToUse": "Max",
-                "Query": "sum(max_over_time(irate(node_disk_io_now{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])[5m:]))/1024/1024"
-            },
-            {
-                "Name" : "Min IOPS",
-                "Decimal" : 2,
-                "Expression" : "",
-                "Scale" : "",
-                "ValueToUse": "Min",
-                "Query": "sum(min_over_time(irate(node_disk_io_now{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])[5m:]))/1024/1024"
-            },
-            {
-                "Name" : "Avg IOPS",
-                "Decimal" : 2,
-                "Expression" : "",
-                "Scale" : "",
-                "ValueToUse": "Avg",
-                "Query": "sum(avg_over_time(irate(node_disk_io_now{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])[5m:]))/1024/1024"
-            },
-            {
-                "Name" : "95% IOPS",
-                "Decimal" : 2,
-                "Expression" : "",
-                "Scale" : "",
-                "ValueToUse": "Max",
-                "Query": "sum(quantile_over_time(0.95,irate(node_disk_io_now{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])[5m:]))/1024/1024"
-            },
-            {
-                "Name" : "99% IOPS",
-                "Decimal" : 2,
-                "Expression" : "",
-                "Scale" : "",
-                "ValueToUse": "Max",
-                "Query": "sum(quantile_over_time(0.99,irate(node_disk_io_now{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[1m])[5m:]))/1024/1024"
             }],
             ["Network:",
                 {
@@ -216,36 +80,12 @@
                 "Query": "sum(max_over_time(irate(node_network_receive_bytes_total{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[5m])[5m:]))/1024/1024"
             },
             {
-                "Name" : "Min Network Received bytes",
-                "Decimal" : 2,
-                "Expression" : "",
-                "Scale" : "MB",
-                "ValueToUse": "Min",
-                "Query": "sum(min_over_time(irate(node_network_receive_bytes_total{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[5m])[5m:]))/1024/1024"
-            },
-            {
                 "Name" : "Avg Network Received bytes",
                 "Decimal" : 2,
                 "Expression" : "",
                 "Scale" : "MB",
                 "ValueToUse": "Last",
                 "Query": "sum(avg_over_time(irate(node_network_receive_bytes_total{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[5m])[5m:]))/1024/1024"
-            },
-            {
-                "Name" : "95% Network Received bytes",
-                "Decimal" : 2,
-                "Expression" : "",
-                "Scale" : "MB",
-                "ValueToUse": "Max",
-                "Query": "sum(quantile_over_time(0.95,irate(node_network_receive_bytes_total{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[5m])[5m:]))/1024/1024"
-            },
-            {
-                "Name" : "99% Network Received bytes",
-                "Decimal" : 2,
-                "Expression" : "",
-                "Scale" : "MB",
-                "ValueToUse": "Max",
-                "Query": "sum(quantile_over_time(0.99,irate(node_network_receive_bytes_total{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[5m])[5m:]))/1024/1024"
             },
             {
                 "Name" : "Max Network Transmit bytes",
@@ -256,36 +96,12 @@
                 "Query": "sum(max_over_time(irate(node_network_transmit_bytes_total{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[5m])[5m:]))/1024/1024"
             },
             {
-                "Name" : "Min Network Transmit bytes",
-                "Decimal" : 2,
-                "Expression" : "",
-                "Scale" : "MB",
-                "ValueToUse": "Min",
-                "Query": "sum(min_over_time(irate(node_network_transmit_bytes_total{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[5m])[5m:]))/1024/1024"
-            },
-            {
                 "Name" : "Avg Network Transmit bytes",
                 "Decimal" : 2,
                 "Expression" : "",
                 "Scale" : "MB",
                 "ValueToUse": "Last",
                 "Query": "sum(avg_over_time(irate(node_network_transmit_bytes_total{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[5m])[5m:]))/1024/1024"
-            },
-            {
-                "Name" : "95% Network Transmit bytes",
-                "Decimal" : 2,
-                "Expression" : "",
-                "Scale" : "MB",
-                "ValueToUse": "Last",
-                "Query": "sum(quantile_over_time(0.95,irate(node_network_transmit_bytes_total{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[5m])[5m:]))/1024/1024"
-            },
-            {
-                "Name" : "99% Network Transmit bytes",
-                "Decimal" : 2,
-                "Expression" : "",
-                "Scale" : "MB",
-                "ValueToUse": "Last",
-                "Query": "sum(quantile_over_time(0.99,irate(node_network_transmit_bytes_total{instance=~'HOSTTOKEN',job=~'JOBTOKEN'}[5m])[5m:]))/1024/1024"
             }]
         ]
     }
