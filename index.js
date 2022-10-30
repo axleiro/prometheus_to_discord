@@ -69,7 +69,7 @@ const recursiveFunction = () => {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({"username": "singhritesh750", "content": `New blog post 👉  ${message.title}`})
+                body: JSON.stringify({"username": "system-metrics", "content": `${message.title}`})
             });
         }
         sendMessage({title: finalResultToPush})
