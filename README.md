@@ -8,7 +8,7 @@
 4. The API will result out some json.
 5. The json will be parsed and the required parameters will be picked out of it. 
 6. Then we will do some formatting of the output.
-7. And then will use the script to feed the formatted result to the slack.
+7. And then will use the script to feed the formatted result to the discord.
 
 To run the repo you need to 
 
